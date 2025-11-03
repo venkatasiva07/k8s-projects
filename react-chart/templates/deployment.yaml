@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "react-chart.fullname" . }}
+  labels:
+    app: {{ include "react-chart.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "react-chart.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "react-chart.name" . }}
+    spec:
+      containers:
+        - name: react-container
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
